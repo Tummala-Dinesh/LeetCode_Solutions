@@ -1,0 +1,21 @@
+class Solution {
+    vector<vector<int>> dp;
+    int helper(string& s,int i,int j){
+        while(i<j && i<s.length() && j>=0 && s[i]==s[j]){
+            i++;j--;
+        }
+        if(i>=j) return 0;
+        if(dp[i][j]!=-1) return dp[i][j];
+        int one=0,two=0;
+        one=1+helper(s,i+1,j);
+        two=1+helper(s,i,j-1);
+        return dp[i][j]=min(one,two);
+
+    }
+public:
+    int minInsertions(string s) {
+        int n=s.length();
+        dp.assign(n,vector<int>(n,-1));
+        return helper(s,0,n-1);
+    }
+};
