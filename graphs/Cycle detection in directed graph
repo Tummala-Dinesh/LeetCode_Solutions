@@ -1,0 +1,33 @@
+//LC 207
+class Solution {
+    bool dfs(vector<bool>& vis,vector<bool> &pathvis,vector<vector<int>> &list,int i){
+        vis[i]=true;
+        pathvis[i]=true;
+        for(auto it:list[i]){
+            if(!vis[it]){
+                if(dfs(vis,pathvis,list,it)) return true;
+            }
+            else if(pathvis[it]) return true;
+            
+        }
+        pathvis[i]=false;
+        return false;
+    }
+public:
+    bool canFinish(int numCourses, vector<vector<int>>& v) {
+        int n=numCourses;
+        int m=v.size();
+        vector<vector<int>> list(n);
+        for(int i=0;i<m;i++){
+            list[v[i][0]].push_back(v[i][1]);
+        }
+        vector<bool> vis(n,false);
+        vector<bool> pathvis(n,false);
+        for(int i=0;i<n;i++){
+            if(!vis[i]){
+                if(dfs(vis,pathvis,list,i)) return false;
+            }
+        }
+        return true;
+    }
+};
