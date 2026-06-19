@@ -1,0 +1,36 @@
+class Solution {
+    bool dfs(vector<bool> &pathvis,vector<bool> &vis,vector<vector<int>> & adj,int i,stack<int> & st){
+        vis[i]=true;
+        pathvis[i]=true;
+        for(int it : adj[i]){
+            if(!vis[it]){
+                if(dfs(pathvis,vis,adj,it,st)) return true;
+            }
+            else if(pathvis[it]) return true;
+        }
+        st.push(i);
+        pathvis[i]=false;
+        return false;
+    }
+public:
+    vector<int> findOrder(int n, vector<vector<int>>& p) {
+        vector<vector<int>> adj(n);
+        for(int i=0;i<p.size();i++){
+            adj[p[i][0]].push_back(p[i][1]);
+        }
+        vector<bool> vis(n,false);
+        stack<int> st;
+        vector<int> ans(n);
+        vector<bool> pathvis(n,false);
+        for(int i=0;i<n;i++){
+            if(!vis[i]){
+                if(dfs(pathvis,vis,adj,i,st)) return {};
+            }
+        }
+        for(int i=n-1;i>=0;i--){
+            ans[i]=st.top();
+            st.pop();
+        }
+        return ans;
+    }
+};
