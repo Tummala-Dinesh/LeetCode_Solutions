@@ -1,0 +1,44 @@
+// Online C++ compiler to run C++ program online
+#include <iostream>
+using namespace std;
+class DSU{
+    vector<int> par,siz;
+    public : 
+     DSU(int n){
+         par.resize(n);
+         siz.resize(n,1);
+         for(int i=0;i<n;i++){
+             par[i]=i;
+         }
+     }
+     int findUpar(int node){
+         if(node==par[node]) return node;
+         return par[node]=findUpar(par[node]);
+     }
+     void unionBySize(int u,int v){
+         int ulp_u=findUpar(u);
+         int ulp_v=findUpar(v);
+         if(ulp_u==ulp_v) return ;
+         if(siz[ulp_u]>siz[ulp_v]){
+             par[ulp_v]=ulp_u;
+             siz[ulp_u]+=siz[ulp_v];
+         }
+         else{
+             par[ulp_u]=ulp_v;
+             siz[ulp_v]+=siz[ulp_u];
+         }
+     }
+};
+int main() {
+    // Write C++ code here
+    vector<vector<pair<int,pair<int,int>>>> edges;
+    DSU ds(n);
+    //{wt,{node,adjnode}}
+    //sort edges by weight
+    // iterate edgese and maintain a MST sum
+    // if(ds.findUpar(node)!=ds.findUpar(adjnode)){
+        unionBySize(node,adjnode);
+        MST+=wt;
+    }
+
+    return wt;
